@@ -5,11 +5,11 @@
  This is a Spring Boot Application with a full-fledged REST API service exposed with Swagger 2.0 UI. 
  It allows for CRUD operations on the customer profile information.
  
- __*The this application is hosted on Microsoft Azure Cloud.**__
+ __*This application is hosted on Microsoft Azure Cloud.**__
  
  Click the following link to access the  __[DEMO](http://appdemos.org)__ 
  
-Default 2 users in the system and corresponding details for Basic in-memory login
+Default 2 users in the system and their corresponding details for Basic in-memory login
 
 | User          | Password      |
 | ------------- |:-------------:|
