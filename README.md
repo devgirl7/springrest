@@ -3,7 +3,7 @@
 ## Customer Profile managemennt REST Application
  
  This is a Spring Boot Application with a full-fledged REST API service exposed with Swagger 2.0 UI. 
- It allows for CRUD operations on the custoemr profile information.
+ It allows for CRUD operations on the customer profile information.
  
  __*The this application is hosted on Microsoft Azure Cloud.**__
  
