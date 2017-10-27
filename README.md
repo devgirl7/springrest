@@ -1,6 +1,6 @@
 [![Build Status](https://semaphoreci.com/api/v1/shourien/springrest/branches/master/shields_badge.svg)](https://semaphoreci.com/shourien/springrest)
 
-## Customer Profile managemennt REST Application
+## Customer Profile management REST Application
  
  This is a Spring Boot Application with a full-fledged REST API service exposed with Swagger 2.0 UI. 
  It allows for CRUD operations on the customer profile information.
@@ -15,6 +15,9 @@ Default 2 users in the system and corresponding details for Basic in-memory logi
 | ------------- |:-------------:|
 | admin         | *password*    |
 | user          | *password*    |
+
+### Architecture Diagram
+![Architecture Page](https://i.imgur.com/W0BVCmT.png)
 
 ### Technology Stack 
  * Spring Boot
