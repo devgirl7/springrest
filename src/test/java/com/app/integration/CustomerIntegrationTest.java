@@ -41,11 +41,12 @@ public class CustomerIntegrationTest {
 	
 	@Test
 	public void testCreateCustomer() throws Exception {
-		Address address = new Address().setAddress("Ashfield").setType(AddressType.WORK);
-		Customer customer = new Customer().setFirstName("first")
-										.setLastName("last")
-										.setDateOfBirth(new SimpleDateFormat("dd/MM/yyyy").parse("21/12/2005"))
+		Address address = new Address().setAddress("Castle Black").setType(AddressType.WORK);
+		Customer customer = new Customer().setFirstName("Tormund")
+										.setLastName("Giantsbane")
+										.setDateOfBirth(new SimpleDateFormat("dd/MM/yyyy").parse("21/12/2000"))
 										.setAddresses(new HashSet<Address>() {{add(address);}});
+		
 		ObjectMapper mapper = new ObjectMapper();
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/customer")
 				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
