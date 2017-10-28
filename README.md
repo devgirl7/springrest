@@ -17,7 +17,7 @@ Default 2 users in the system and their corresponding details for Basic in-memor
 | user          | *password*    |
 
 ### Architecture Diagram
-![Architecture Page](https://i.imgur.com/W0BVCmT.png)
+![Architecture Page](https://i.imgur.com/AMLcQCp.png)
 
 ### Technology Stack 
  * Spring Boot
