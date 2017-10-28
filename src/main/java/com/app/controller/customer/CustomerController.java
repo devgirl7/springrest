@@ -50,7 +50,7 @@ public class CustomerController {
 		return ResponseEntity.ok(customerService.findAll());
 	}
 
-	@ApiOperation(value = "Retrieve a customer based on the passed ID", response = Customer.class, responseReference = "results")
+	@ApiOperation(value = "Retrieve a customer based on the passed ID", response = Customer.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved the customer") })
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseVO<Customer>> get(

@@ -1,15 +1,12 @@
 package com.app.integration;
 
-import static org.junit.Assert.assertEquals;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.hamcrest.Matchers;
-import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNot;
+import org.hamcrest.collection.IsCollectionWithSize;
 import org.hamcrest.collection.IsEmptyCollection;
 
 import org.junit.Test;
@@ -22,14 +19,15 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.app.entity.customer.Address;
 import com.app.entity.customer.Address.AddressType;
+import com.app.models.ResponseVO;
 import com.app.entity.customer.Customer;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -78,7 +76,6 @@ public class CustomerIntegrationTest {
 	
 	@Test
 	public void testGetAllCustomerDetails() throws Exception {
-		testCreateCustomer();
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/customer")
 				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
 				.contentType(MediaType.APPLICATION_JSON);
@@ -90,21 +87,38 @@ public class CustomerIntegrationTest {
 	
 	@Test
 	public void testGetCustomerDetailByFirstName() throws Exception {
-		testCreateCustomer();
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/customer")
 				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
-				.param("name", "first")
+				.param("name", "Jon")
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		mockMvc.perform(requestBuilder)
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("[?(@.firstName!='first')]", IsEmptyCollection.empty()));
+				.andExpect(MockMvcResultMatchers.jsonPath("[?(@.firstName=='Jon')]", IsCollectionWithSize.hasSize(1)));
+	}
+	
+	@Test
+	public void testUpdateCustomerDetails() throws Exception {
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/customer/1")
+				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
+				.contentType(MediaType.APPLICATION_JSON);
+		ResponseVO<Customer> response = new ObjectMapper().readValue(
+				mockMvc.perform(requestBuilder).andReturn().getResponse().getContentAsString(), new TypeReference<ResponseVO<Customer>>() {});
+		
+		//Update Last Name Type
+		ObjectMapper mapper = new ObjectMapper();
+		RequestBuilder updateRequestBuilder = MockMvcRequestBuilders.put("/customer")
+				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
+				.content(mapper.writeValueAsString(response.getResults().setLastName("Targaryen")))
+				.contentType(MediaType.APPLICATION_JSON);
+		
+		mockMvc.perform(updateRequestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	@Test
 	public void testDeleteCustomerDetails() throws Exception {
-		testCreateCustomer();
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/customer/1")
+		// Customer no longer exists (ref: data.sql)
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/customer/2")
 				.with(SecurityMockMvcRequestPostProcessors.user("user").password("password"))
 				.contentType(MediaType.APPLICATION_JSON);
 		
